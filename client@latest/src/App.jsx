@@ -1,4 +1,3 @@
-// App.js
 import './App.css';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
@@ -18,7 +17,7 @@ function App() {
            console.log(game);
            setGameState(game);
      });
-     return ()=>{
+     return () => {
       socket.removeAllListeners();
      }
   }, []);
@@ -27,16 +26,14 @@ function App() {
     if (gameState._id !== "") {
       navigate(`/game/${gameState._id}`);
     }
-  }, [gameState._id,navigate]);
+  }, [gameState._id, navigate]);
 
   return (
-    
       <Routes>
         <Route path="/" element={<GameMenu />} />
         <Route path="/game/create" element={<CreateGame/>} />
         <Route path="/game/join" element={<JoinGame/>} />
         <Route path="/game/:gameID" element={<TypeRacer gameState={gameState} />} />
-
       </Routes>
   );
 }
