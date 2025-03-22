@@ -4,7 +4,6 @@ import socket from '../socketCongig';
 const StartBtn = ({ gameID, player }) => {
   const [showBtn, setShowBtn] = useState(true);
 
-  // Check if player exists and then destructure
   const isPartyLeader = player ? player.isPartyLeader : false;
 
   const onClickHandler = () => {
