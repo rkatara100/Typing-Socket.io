@@ -24,11 +24,15 @@ mongoose.connect('mongodb://localhost:27017/typeracer')
     console.error('Error connecting to database:', error);
   });
 
+
 app.get('/', (req, res) => {
   res.send('hello ji');
 });
 
+
+
 io.on('connect', (socket) => {
+
 
   socket.on('userInput', async ({ userInput, gameID }) => {
     try {
@@ -68,6 +72,8 @@ io.on('connect', (socket) => {
     }
   });
 
+
+
   socket.on('timer', async ({ gameID, playerID }) => {
     let countDown = 5;
     let game = await Game.findById(gameID);
@@ -92,6 +98,7 @@ io.on('connect', (socket) => {
     }
   });
 
+
   socket.on('join-game', async ({ gameID, nickName }) => {
     try {
       let game = await Game.findById(gameID);
@@ -110,6 +117,7 @@ io.on('connect', (socket) => {
       socket.emit('error', { message: 'Error joining game.' });
     }
   });
+
 
   socket.on('create-game', async (nickName) => {
     try {
@@ -135,6 +143,8 @@ io.on('connect', (socket) => {
     }
   });
 });
+
+
 
 const StartGameClock = async (gameID) => {
   let game = await Game.findById(gameID);
@@ -177,6 +187,8 @@ const StartGameClock = async (gameID) => {
     }
   }, 1000);
 };
+
+
 
 const calculateTime = (time) => {
   let minutes = Math.floor(time / 60);

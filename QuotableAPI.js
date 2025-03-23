@@ -16,6 +16,7 @@ module.exports.getData = async () => {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const randomQuote = quotes[randomIndex];
     // Split the quote into words (like we did with the API response)
+    
     return randomQuote.split(' ');
   } catch (error) {
     console.error('Error fetching quote:', error.message);

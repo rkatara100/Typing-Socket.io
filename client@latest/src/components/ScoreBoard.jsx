@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
 
 const getScoreboard = (players) => {
   const scoreBoard = players.filter(player => player.WPM !== -1); 
@@ -9,35 +10,34 @@ const ScoreBoard = ({ players }) => {
   const scoreBoard = getScoreboard(players);
   
   if (scoreBoard.length <= 1) { 
-    return null;  // Don't show the scoreboard if there is only 1 or fewer players
+    return null; // Don't show the scoreboard if there is only 1 or fewer players
   }
 
   return (
-    <table className='table table-striped my-3'>
-      <thead>
-        <tr>
-          <th scope='col'>#</th>
-          <th scope='col'>User</th>
-          <th scope='col'>WPM</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          scoreBoard.map((player, index) => (
-            <tr key={`${player.nickName}-${player._id}`}>
-              <th scope='row'>
-                {index + 1}
-              </th>
-              <td>
-                {player.nickName}
-              </td>
-              <td>{player.WPM === -1 ? "No words typed" : player.WPM}</td>  
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
+    <TableContainer component={Paper} sx={{ marginTop: 3, maxWidth: 600, margin: 'auto' }}>
+      <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: 2, fontWeight: 'bold', color: '#4e54c8' }}>
+        Scoreboard
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ fontWeight: 'bold', color: '#007bff' }}>#</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: '#007bff' }}>User</TableCell>
+            <TableCell sx={{ fontWeight: 'bold', color: '#007bff' }}>WPM</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {scoreBoard.map((player, index) => (
+            <TableRow key={`${player.nickName}-${player._id}`}>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell>{player.nickName}</TableCell>
+              <TableCell>{player.WPM === -1 ? "No words typed" : player.WPM}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
-}
+};
 
 export default ScoreBoard;

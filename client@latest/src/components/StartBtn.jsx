@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import socket from '../socketCongig';
+import { Button, Box } from '@mui/material';
 
 const StartBtn = ({ gameID, player }) => {
   const [showBtn, setShowBtn] = useState(true);
@@ -12,13 +13,26 @@ const StartBtn = ({ gameID, player }) => {
   };
 
   return (
-    <div>
+    <Box sx={{ textAlign: 'center', marginTop: 2 }}>
       {isPartyLeader && showBtn ? (
-        <button type='button' onClick={onClickHandler} className='btn btn-primary'>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={onClickHandler}
+          sx={{
+            fontWeight: 'bold',
+            fontSize: '16px',
+            padding: '10px 20px',
+            backgroundColor: '#007bff',
+            '&:hover': {
+              backgroundColor: '#0056b3', // Darker blue on hover
+            },
+          }}
+        >
           Start Game
-        </button>
+        </Button>
       ) : null}
-    </div>
+    </Box>
   );
 };
 

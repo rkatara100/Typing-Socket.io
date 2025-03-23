@@ -6,11 +6,13 @@ import socket from './socketCongig';
 import CreateGame from './components/CreateGame';
 import JoinGame from './components/JoinGame';
 import TypeRacer from './components/TypeRacer.jsx';
+import Navbar from './components/Navbar.jsx';
 
 function App() {
    const navigate = useNavigate();
 
   const [gameState, setGameState] = useState({ _id: "", isOpen: false, players: [], words: [] });
+  
 
   useEffect(() => {
      socket.on('updateGame', (game) => {
@@ -29,12 +31,15 @@ function App() {
   }, [gameState._id, navigate]);
 
   return (
-      <Routes>
+    <>
+         <Routes>
         <Route path="/" element={<GameMenu />} />
         <Route path="/game/create" element={<CreateGame/>} />
         <Route path="/game/join" element={<JoinGame/>} />
         <Route path="/game/:gameID" element={<TypeRacer gameState={gameState} />} />
       </Routes>
+    </>
+     
   );
 }
 

@@ -1,11 +1,24 @@
 import React from 'react';
+import { Box, Typography } from '@mui/material';
 
 const typedCurrentlyStyle = {
-  backgroundColor: "#34eb77",
+  backgroundColor: "#34eb77", // Green background for typed words
+  color: "white",
+  padding: "2px 4px",
+  borderRadius: "4px",
+  marginRight: "4px",
 };
 
 const currentStyle = {
-  textDecoration: "underline",
+  textDecoration: "underline", // Underline for the current word
+  color: "#007bff", // Blue color
+  fontWeight: "bold",
+  marginRight: "4px",
+};
+
+const mutedStyle = {
+  color: "#6c757d", // Muted gray color for words to be typed
+  marginRight: "4px",
 };
 
 const getTypedWords = (words, player) => {
@@ -14,7 +27,11 @@ const getTypedWords = (words, player) => {
   }
   let typedWords = words.slice(0, Math.min(player.currentWordIndex, words.length));
   typedWords = typedWords.join(" ");
-  return <span style={typedCurrentlyStyle} className="text-success">{typedWords}</span>;
+  return (
+    <Typography component="span" style={typedCurrentlyStyle}>
+      {typedWords}
+    </Typography>
+  );
 };
 
 const getCurrentWord = (words, player) => {
@@ -22,7 +39,11 @@ const getCurrentWord = (words, player) => {
     return null;
   }
   const currentWord = words[player.currentWordIndex];
-  return currentWord ? <span style={currentStyle} className="text-primary">{currentWord}</span> : null;
+  return currentWord ? (
+    <Typography component="span" style={currentStyle}>
+      {currentWord}
+    </Typography>
+  ) : null;
 };
 
 const getWordsToBeTyped = (words, player) => {
@@ -31,17 +52,32 @@ const getWordsToBeTyped = (words, player) => {
   }
   let wordsToBeTyped = words.slice(player.currentWordIndex + 1, words.length);
   wordsToBeTyped = wordsToBeTyped.join(" ");
-  return <span className="text-muted">{wordsToBeTyped}</span>;
+  return (
+    <Typography component="span" style={mutedStyle}>
+      {wordsToBeTyped}
+    </Typography>
+  );
 };
 
 const DisplayWords = ({ words = [], player = {} }) => {
   return (
-    <div className="d-flex flex-wrap">
+    <Box
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "16px",
+        backgroundColor: "#f8f9fa", // Light background for better contrast
+        borderRadius: "8px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      }}
+    >
       {getTypedWords(words, player)}
       {getCurrentWord(words, player)}
       {getWordsToBeTyped(words, player)}
-    </div>
+    </Box>
   );
-}
+};
 
 export default DisplayWords;

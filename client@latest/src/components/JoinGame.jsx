@@ -1,47 +1,128 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import socket from '../socketCongig';
+import { Box, TextField, Button, Typography, Alert } from '@mui/material';
 
 const JoinGame = () => {
- 
-      const [userInput,setUserInput]=useState({gameID:"",nickName:""});
+  const [userInput, setUserInput] = useState({ gameID: '', nickName: '' });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
-      const onChange=(e)=>{
-             setUserInput({...userInput,[e.target.name]:e.target.value});
-      }
+  const onChange = (e) => {
+    setUserInput({ ...userInput, [e.target.name]: e.target.value });
+    setError(''); // Clear error on input change
+  };
 
-      const onSubmit=(e)=>{
-            e.preventDefault();
-            console.log(userInput);
-            socket.emit('join-game',userInput);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const { gameID, nickName } = userInput;
+
+    if (!gameID.trim() || !nickName.trim()) {
+      setError('Both Game ID and Nickname are required!');
+      return;
+    }
+
+    socket.emit('join-game', userInput, (response) => {
+      if (response.error) {
+        setError(response.error);
+      } else {
+        setSuccess(true);
+        console.log('Game joined successfully:', response);
+        // Optionally redirect or perform other actions
       }
+    });
+  };
 
   return (
-    <div className='row'>
-      <div className="col-sm">
-            <div className="col-sm-8">
-              <h1 className='text-center'>
-                  Join Game
-              </h1>
-              <form onSubmit={onSubmit}>
-                  <div className="form-group">
-                        <label htmlFor="gameID">Enter Game ID</label>
-                        <input type="text" name='gameID' value={userInput.gameID} onChange={onChange} placeholder='Enter Game ID' className='form-control m-4' />
+    <Box
+      sx={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #4e54c8, #8f94fb)',
+        color: 'white',
+        padding: 2,
+      }}
+    >
+      <Typography variant="h4" gutterBottom>
+        Join Game
+      </Typography>
+      <form onSubmit={onSubmit} style={{ width: '100%', maxWidth: '400px' }}>
+        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {success && <Alert severity="success" sx={{ mb: 2 }}>Game joined successfully!</Alert>}
+        <TextField
+          label="Enter Game ID"
+          name="gameID"
+          variant="outlined"
+          fullWidth
+          value={userInput.gameID}
+          onChange={onChange}
+          InputProps={{
+            sx: {
+              color: 'white', 
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'skyblue', 
+                },
+                '&:hover fieldset': {
+                  borderColor: 'pink', 
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'blue', 
+                },
+              },
+            },
+          }}
+          sx={{
+            mb: 2,
+            '& .MuiInputLabel-root': {
+              color: 'white', 
+            },
+          }}
+        />
+        <TextField
+          label="Enter Nickname"
+          name="nickName"
+          variant="outlined"
+          fullWidth
+          value={userInput.nickName}
+          onChange={onChange}
+          InputProps={{
+            sx: {
+              color: 'white', 
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'skyblue', 
+                },
+                '&:hover fieldset': {
+                  borderColor: 'pink', 
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'blue',
+                },
+              },
+            },
+          }}
+          sx={{
+            mb: 2,
+            '& .MuiInputLabel-root': {
+              color: 'white', // Label color
+            },
+          }}
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ fontWeight: 'bold', fontSize: '16px' }}
+        >
+          Submit
+        </Button>
+      </form>
+    </Box>
+  );
+};
 
-               <label htmlFor="nickName">Enter Nick Name</label>
-                        <input type="text" name='nickName' value={userInput.nickName} onChange={onChange} placeholder='Enter Nick Name' className='form-control m-4' />
-                    
-                  </div>
-
-                  <button type='submit' className='btn btn-primary m-4'>Submit</button>
-              </form>
-            </div>
-            <div className="col-sm">
-
-            </div>
-      </div>
-      
-    </div>
-  )
-}
-
-export default JoinGame
+export default JoinGame;

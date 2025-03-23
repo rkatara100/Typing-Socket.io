@@ -1,42 +1,92 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import socket from '../socketCongig';
+import { Box, TextField, Button, Typography, Alert } from '@mui/material';
 
 const CreateGame = () => {
-   
-      const [nickName,setNickName]=useState("");
+  const [nickName, setNickName] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
-      const onChange=(e)=>{
-             setNickName(e.target.value);
-      }
+  const onChange = (e) => {
+    setNickName(e.target.value);
+    setError(''); // Clear error on input change
+  };
 
-      const onSubmit=(e)=>{
-            e.preventDefault();
-            socket.emit('create-game',nickName);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (!nickName.trim()) {
+      setError('Nickname is required!');
+      return;
+    }
+    socket.emit('create-game', nickName, (response) => {
+      console.log('Server Response:', response); // Debugging
+      if (response.error) {
+        setError(response.error);
+      } else {
+        setSuccess(true);
       }
+    });
+  };
 
   return (
-    <div className='row'>
-      <div className="col-sm">
-            <div className="col-sm-8">
-              <h1 className='text-center'>
-                  Create Game
-              </h1>
-              <form onSubmit={onSubmit}>
-                  <div className="form-group">
-                        <label htmlFor="nickName">Enter Nick Name</label>
-                        <input type="text" name='nickName' value={nickName} onChange={onChange} placeholder='Enter Nick Name' className='form-control m-4' />
-                  </div>
+    <Box
+      sx={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #4e54c8, #8f94fb)',
+        color: 'white',
+      }}
+    >
+      <Typography variant="h4" gutterBottom>
+        Create Game
+      </Typography>
+      <form onSubmit={onSubmit} style={{ width: '100%', maxWidth: '400px' }}>
+        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {success && <Alert severity="success" sx={{ mb: 2 }}>Game created successfully!</Alert>}
+        <TextField
+          label="Enter Nickname"
+          variant="outlined"
+          fullWidth
+          value={nickName}
+          onChange={onChange}
+          InputProps={{
+            sx: {
+              color: 'white', // Typing text color
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'skyblue', // Default border color
+                },
+                '&:hover fieldset': {
+                  borderColor: 'pink', // Hover border color
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'blue', // Focused border color
+                },
+              },
+            },
+          }}
+          sx={{
+            mb: 2,
+            '& .MuiInputLabel-root': {
+              color: 'white', // Label color
+            },
+          }}
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ fontWeight: 'bold', fontSize: '16px' }}
+        >
+          Submit
+        </Button>
+      </form>
+    </Box>
+  );
+};
 
-                  <button type='submit' className='btn btn-primary m-4'>Submit</button>
-              </form>
-            </div>
-            <div className="col-sm">
-
-            </div>
-      </div>
-      
-    </div>
-  )
-}
-
-export default CreateGame
+export default CreateGame;
