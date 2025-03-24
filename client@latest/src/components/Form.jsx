@@ -47,18 +47,18 @@ const Form = ({ isOpen, isOver, gameID }) => {
         InputProps={{
           readOnly: isOpen || isOver,
           sx: {
-            color: 'black', // Typing text color
-            backgroundColor: '#f8f9fa', // Light background
+            color: 'black', 
+            backgroundColor: '#f8f9fa',
             borderRadius: '8px',
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
-                borderColor: '#007bff', // Default border color
+                borderColor: '#007bff', 
               },
               '&:hover fieldset': {
-                borderColor: '#34eb77', // Hover border color
+                borderColor: '#34eb77', 
               },
               '&.Mui-focused fieldset': {
-                borderColor: '#007bff', // Focused border color
+                borderColor: '#007bff', 
               },
             },
           },

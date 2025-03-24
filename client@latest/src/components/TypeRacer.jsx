@@ -9,7 +9,6 @@ import ProgresBar from './ProgresBar.jsx';
 import ScoreBoard from './ScoreBoard.jsx';
 import { Box, Typography, CircularProgress } from '@mui/material';
 
-// Function to find the current player based on socket ID
 const getCurrentPlayer = (players) => {
   return players.find(player => player.socketID === socket.id);
 };
@@ -18,14 +17,12 @@ const TypeRacer = ({ gameState }) => {
   const navigate = useNavigate();
   const { _id, players, words, isOpen, isOver } = gameState || {};
 
-  // Redirect to home if game ID is missing
   useEffect(() => {
     if (!_id) {
       navigate('/'); 
     }
   }, [_id, navigate]);
 
-  // Show loading state if gameState is not available
   if (!gameState) {
     return (
       <Box sx={{ textAlign: 'center', marginTop: 4 }}>
@@ -37,7 +34,6 @@ const TypeRacer = ({ gameState }) => {
     );
   }
 
-  // Show loading state if words or players are not loaded
   if (!words || !players) {
     return (
       <Box sx={{ textAlign: 'center', marginTop: 4 }}>
@@ -49,10 +45,8 @@ const TypeRacer = ({ gameState }) => {
     );
   }
 
-  // Get the current player
   const currentPlayer = getCurrentPlayer(players);
 
-  // Show error if the current player is not found
   if (!currentPlayer) {
     return (
       <Box sx={{ textAlign: 'center', marginTop: 4 }}>
@@ -66,10 +60,8 @@ const TypeRacer = ({ gameState }) => {
   // Main game UI
   return (
     <Box sx={{ textAlign: 'center', padding: 2 }}>
-      {/* Display the words for the typing game */}
       <DisplayWords words={words} player={currentPlayer} />
 
-      {/* Show the progress bar for all players */}
       <ProgresBar players={players} player={currentPlayer} wordLength={words.length} />
 
       <Form isOpen={isOpen} isOver={isOver} gameID={_id} />

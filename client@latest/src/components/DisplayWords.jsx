@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 
 const typedCurrentlyStyle = {
-  backgroundColor: "#34eb77", // Green background for typed words
+  backgroundColor: "#34eb77", 
   color: "white",
   padding: "2px 4px",
   borderRadius: "4px",
@@ -10,14 +10,14 @@ const typedCurrentlyStyle = {
 };
 
 const currentStyle = {
-  textDecoration: "underline", // Underline for the current word
-  color: "#007bff", // Blue color
+  textDecoration: "underline", 
+  color: "#007bff", 
   fontWeight: "bold",
   marginRight: "4px",
 };
 
 const mutedStyle = {
-  color: "#6c757d", // Muted gray color for words to be typed
+  color: "#6c757d",
   marginRight: "4px",
 };
 
@@ -68,7 +68,7 @@ const DisplayWords = ({ words = [], player = {} }) => {
         justifyContent: "center",
         alignItems: "center",
         padding: "16px",
-        backgroundColor: "#f8f9fa", // Light background for better contrast
+        backgroundColor: "#f8f9fa", 
         borderRadius: "8px",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
       }}

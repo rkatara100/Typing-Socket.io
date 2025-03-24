@@ -10,7 +10,7 @@ const ScoreBoard = ({ players }) => {
   const scoreBoard = getScoreboard(players);
   
   if (scoreBoard.length <= 1) { 
-    return null; // Don't show the scoreboard if there is only 1 or fewer players
+    return null; 
   }
 
   return (

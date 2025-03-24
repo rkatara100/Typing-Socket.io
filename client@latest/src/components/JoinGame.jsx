@@ -9,7 +9,7 @@ const JoinGame = () => {
 
   const onChange = (e) => {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
-    setError(''); // Clear error on input change
+    setError(''); 
   };
 
   const onSubmit = (e) => {
@@ -27,7 +27,7 @@ const JoinGame = () => {
       } else {
         setSuccess(true);
         console.log('Game joined successfully:', response);
-        // Optionally redirect or perform other actions
+        
       }
     });
   };
@@ -107,7 +107,7 @@ const JoinGame = () => {
           sx={{
             mb: 2,
             '& .MuiInputLabel-root': {
-              color: 'white', // Label color
+              color: 'white', 
             },
           }}
         />

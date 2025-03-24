@@ -25,7 +25,7 @@ const StartBtn = ({ gameID, player }) => {
             padding: '10px 20px',
             backgroundColor: '#007bff',
             '&:hover': {
-              backgroundColor: '#0056b3', // Darker blue on hover
+              backgroundColor: '#0056b3', 
             },
           }}
         >

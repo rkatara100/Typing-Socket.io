@@ -12,10 +12,8 @@ const quotes = [
 // Function to get a random quote
 module.exports.getData = async () => {
   try {
-    // Get a random index from the quotes array
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const randomQuote = quotes[randomIndex];
-    // Split the quote into words (like we did with the API response)
     
     return randomQuote.split(' ');
   } catch (error) {

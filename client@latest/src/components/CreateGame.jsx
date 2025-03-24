@@ -9,7 +9,7 @@ const CreateGame = () => {
 
   const onChange = (e) => {
     setNickName(e.target.value);
-    setError(''); // Clear error on input change
+    setError('');
   };
 
   const onSubmit = (e) => {
@@ -19,7 +19,6 @@ const CreateGame = () => {
       return;
     }
     socket.emit('create-game', nickName, (response) => {
-      console.log('Server Response:', response); // Debugging
       if (response.error) {
         setError(response.error);
       } else {
@@ -54,16 +53,16 @@ const CreateGame = () => {
           onChange={onChange}
           InputProps={{
             sx: {
-              color: 'white', // Typing text color
+              color: 'white',
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: 'skyblue', // Default border color
+                  borderColor: 'skyblue',
                 },
                 '&:hover fieldset': {
-                  borderColor: 'pink', // Hover border color
+                  borderColor: 'pink',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: 'blue', // Focused border color
+                  borderColor: 'blue',
                 },
               },
             },
@@ -71,7 +70,7 @@ const CreateGame = () => {
           sx={{
             mb: 2,
             '& .MuiInputLabel-root': {
-              color: 'white', // Label color
+              color: 'white',
             },
           }}
         />

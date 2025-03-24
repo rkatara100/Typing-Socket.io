@@ -18,7 +18,6 @@ const CountDown = () => {
     socket.on('done', handleDone);
 
     return () => {
-      // Clean up listeners when the component is unmounted
       socket.removeListener('timer', handleTimer);
       socket.removeListener('done', handleDone);
     };
@@ -41,7 +40,7 @@ const CountDown = () => {
         variant="h2"
         sx={{
           fontWeight: 'bold',
-          color: countDown > 0 ? '#007bff' : '#34eb77', // Blue for countdown, green when done
+          color: countDown > 0 ? '#007bff' : '#34eb77',
         }}
       >
         {countDown || "Waiting..."}
@@ -50,7 +49,7 @@ const CountDown = () => {
         variant="h5"
         sx={{
           marginTop: 2,
-          color: '#6c757d', // Muted gray for the message
+          color: '#6c757d',
         }}
       >
         {msg || "Get ready to start!"}
