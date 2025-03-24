@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const socketio = require('socket.io');
@@ -16,7 +17,10 @@ const io = socketio(expressServer, {
   }
 });
 
-mongoose.connect('mongodb://localhost:27017/typeracer')
+mongoose.connect(process.env.MONGO_URI||3001, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
   .then(() => {
     console.log('Successfully connected to the database');
   })
