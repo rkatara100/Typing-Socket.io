@@ -17,10 +17,7 @@ const io = socketio(expressServer, {
   }
 });
 
-mongoose.connect(process.env.MONGO_URI||3001, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URI||3001)
   .then(() => {
     console.log('Successfully connected to the database');
   })
